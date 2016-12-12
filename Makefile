@@ -9,6 +9,6 @@ clean:
 	rm -f src/*.o
 	rm -f inc/*.hpp
 install:
-	cp bin/intlen /usr/local/bin
+	cp bin/intlen $(DESTDIR)
 remove:
-	rm -f /usr/local/bin/intlen
+	rm -f $(DESTDIR)/intlen

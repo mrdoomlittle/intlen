@@ -5,17 +5,19 @@
 int main(int argc, char * argv [])
 {
     if (argc < 2) {
+        printf("ERROR: please provide 1 more extra argument\n");
+        printf("Usage: intlen (NUMBER)\n");
         return 1;
-        printf("error: needs more then 2 args!\n");
     } 
     
-    if (atoi(argv[1]) > 2000000 || atoi(argv[1]) < 0) {
-        printf("error: number is to large to pass thru!! or it might be to small\n");
+    if (atoi(argv[1]) > 2000000000 || atoi(argv[1]) < 0) {
+        printf("ERROR: the number can be grater then '2000000000'\n");
+        printf("NOTE: your must use the library for large numbers!\n");
         return 1;
     }
-  //  std::cout << atoi(argv[1]) << std::endl;
+    //std::cout << atoi(argv[1]) << std::endl;
   
-    int output = mdl::intlen(atoi(argv[1]));
+    int output = mdl::intlen(std::atoi(argv[1]));
 
     printf("%d\n", output);
 

@@ -8,10 +8,9 @@ std::uint64_t mdl::intlen(std::uint64_t __int)
 
     for (std::uint64_t i = base_unit;; i *= base_unit) {
         if (i <= __int) {
-                if (i == 10)
+                if (i == base_unit)
                     len_of_int = 2;
-                else
-                    len_of_int ++;
+                else len_of_int ++;
         } else break;
     }
 

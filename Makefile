@@ -10,9 +10,12 @@ clean:
 	rm -f src/*.o
 	rm -f inc/*.hpp
 install:
-	cp bin/intlen $(DESTDIR)/bin
-	cp inc/intlen.hpp $(DESTDIR)/include
-	cp lib/libintlen.a $(DESTDIR)/lib
+	mkdir -p $(DESTDIR)/bin
+	mkdir -p $(DESTDIR)/include
+	mkdir -p $(DESTDIR)/lib
+	cp bin/intlen $(DESTDIR)/bin/intlen
+	cp inc/intlen.hpp $(DESTDIR)/include/intlen.hpp
+	cp lib/libintlen.a $(DESTDIR)/lib/libintlen.a
 remove:
 	rm -f $(DESTDIR)/bin/intlen
 	rm -f $(DESTDIR)/include/intlen.hpp

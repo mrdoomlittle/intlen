@@ -1,7 +1,0 @@
-make build ARC=-DARC32 # 64 uint
-or
-make A64
-
-make build ARC=-DARC64 # 32 uint
-or
-make A32

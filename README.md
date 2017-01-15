@@ -2,8 +2,8 @@ small script to count the digits in a int. NOTE: this might be a inefficient way
 
 make build ARC=-DARC64 # 64 uint
 or
-make A64
+make ARC64
 
 make build ARC=-DARC32 # 32 uint
 or
-make A32
+make ARC32

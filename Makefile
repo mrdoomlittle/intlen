@@ -10,7 +10,7 @@ ARC32:
 build: src/intlen.o
 	cp src/intlen.hpp inc
 	ar rcs lib/libintlen.a src/intlen.o
-	g++ -Wall -std=c++11 $(ARC) -o bin/intlen intlen.cpp -lintlen -Llib
+	g++ -Wall -std=c++11 $(ARC) -Iinc -Llib -o bin/intlen intlen.cpp -lintlen
 
 src/intlen.o: src/intlen.cpp
 	g++ -c -Wall -std=c++11 $(ARC) -o src/intlen.o src/intlen.cpp

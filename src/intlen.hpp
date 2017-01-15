@@ -5,14 +5,14 @@
 namespace mdl
 {
     # ifdef ARC64
-        typedef boost::uint64_t int_t;
+        typedef boost::uint64_t uint_t;
     # elif ARC32
-        typedef boost::uint32_t int_t;
+        typedef boost::uint32_t uint_t;
     # else
-        typedef unsigned int int_t;
+        typedef unsigned int uint_t;
     # endif
 
-    int_t intlen(int_t __int);
+    std::size_t intlen(uint_t __uint);
 }
 
 # endif /*__intlen__hpp*/

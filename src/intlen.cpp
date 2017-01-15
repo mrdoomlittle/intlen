@@ -1,14 +1,12 @@
 # include "intlen.hpp"
-//# include <iostream>
 
-mdl::int_t mdl::intlen(int_t __int)
+std::size_t mdl::intlen(uint_t __uint)
 {
-    int_t len_of_int = 0;
-    int_t base_unit = 10;
-    //std::uint64_t start_unit = 10;
-
-    for (int_t i = base_unit;; i *= base_unit) {
-        if (i <= __int) {
+    std::size_t len_of_int = 0;
+    uint_t base_unit = 10;
+    
+    for (uint_t i = base_unit;; i *= base_unit) {
+        if (i <= __uint) {
                 if (i == base_unit)
                     len_of_int = 2;
                 else len_of_int ++;

@@ -1,7 +1,7 @@
-# include "inc/intlen.hpp"
+# include <intlen.hpp>
 # include <cstdio>
 # include <cstdlib>
-//# include <iostream>
+
 int main(int argc, char * argv [])
 {
     if (argc < 2) {
@@ -15,11 +15,10 @@ int main(int argc, char * argv [])
         printf("NOTE: your must use the library for large numbers!\n");
         return 1;
     }
-    //std::cout << atoi(argv[1]) << std::endl;
   
-    int output = mdl::intlen(std::atoi(argv[1]));
+    std::size_t output = mdl::intlen(std::atoi(argv[1]));
 
-    printf("%d\n", output);
+    printf("%ld\n", output);
 
     return 0;
 }

@@ -17,3 +17,10 @@ std::size_t mdl::intlen(uint_t __uint)
 
     return len_of_int;
 }
+
+extern "C" {
+    std::size_t intlen(mdl::uint_t __uint) {
+        return mdl::intlen(__uint);
+    }
+}
+

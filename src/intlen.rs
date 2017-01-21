@@ -6,5 +6,5 @@
 type uint_t = u32;
 
 extern "C" {
-	pub fn intlen(__uint: uint_t) -> usize;
+    pub fn intlen(__uint: uint_t) -> usize;
 }

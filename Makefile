@@ -37,7 +37,7 @@ src/libintlen.rlib: src/intlen.rs
 clean:
 	rm -f bin/*
 	rm -f lib/*.a
-	rm -f lib/*.rlib
+	rm -f rlib/*.rlib
 	rm -f inc/*.hpp
 	rm -f src/*.o
 	rm -f src/*.a
@@ -56,5 +56,5 @@ install:
 uninstall:
 	rm -f $(DESTDIR)/bin/intlen
 	rm -f $(DESTDIR)/lib/libintlen.a
-	rm -f $(DESTDIR)/lib/libintlen.rlib
+	rm -f $(DESTDIR)/rlib/libintlen.rlib
 	rm -f $(DESTDIR)/include/intlen.hpp

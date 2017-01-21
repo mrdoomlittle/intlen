@@ -17,8 +17,8 @@ build: src/intlen.o src/libintlen.a
 	
 	if [ $(RUST_LIBS) = true ]; then\
 		make rust-libs R_ARC=$(R_ARC) CFG=$(CFG);\
-		cp src/libintlen.rlib lib;\
-		rustc -Llib -o bin/intlen.rust intlen.rs -lintlen;\
+		cp src/libintlen.rlib rlib;\
+		rustc -Lrlib -o bin/intlen.rust intlen.rs -lintlen;\
 	fi;
 		
 	g++ -Wall -std=c++11 $(ARC) -Iinc -Llib -o bin/intlen intlen.cpp -lintlen
@@ -45,12 +45,13 @@ clean:
 install:
 	mkdir -p $(DESTDIR)/bin
 	mkdir -p $(DESTDIR)/lib
+	mkdir -p $(DESTDIR)/rlib
 	mkdir -p $(DESTDIR)/include
 	cp bin/intlen $(DESTDIR)/bin/intlen
-	if [ -f lib/libintlen.a ]; then \
-		cp lib/libintlen.a $(DESTDIR)/lib/libintlen.a
+	cp lib/libintlen.a $(DESTDIR)/lib/libintlen.a
+	if [ -f rlib/libintlen.rlib ]; then\
+		cp rlib/libintlen.rlib $(DESTDIR)/rlib/libintlen.rlib;\
 	fi;
-	cp lib/libintlen.rlib $(DESTDIR)/lib/libintlen.rlib
 	cp inc/intlen.hpp $(DESTDIR)/include/intlen.hpp
 uninstall:
 	rm -f $(DESTDIR)/bin/intlen

@@ -8,9 +8,9 @@ RUST_LIBS=false
 all: build
 
 ARC64:
-	make build ARC=-DARC64 R_ARC=ARC64 CFG=--cfg
+	make build ARC=-DARC64 R_ARC=ARC64 CFG=--cfg RUST_LIBS=$(RUST_LIBS)
 ARC32:
-	make build ARC=-DARC32 R_ARC=ARC32 CFG=--cfg
+	make build ARC=-DARC32 R_ARC=ARC32 CFG=--cfg RUST_LIBS=$(RUST_LIBS)
 build: src/intlen.o src/libintlen.a
 	cp src/intlen.hpp inc
 	cp src/libintlen.a lib

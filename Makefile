@@ -4,9 +4,9 @@ DESTDIR=$(DEF_INSTALL)
 
 NO_BINARY=false
 INC_DIR_NAME=include
-EINT_T_INC=$(DEF_INSTALL)/$(INC_DIR_NAME)
+MDLINT_INC=$(DEF_INSTALL)/$(INC_DIR_NAME)
 
-INC=-Iinc -I$(EINT_T_INC)
+INC=-Iinc -I$(MDLINT_INC)
 LIB=-Llib
 LL=-lintlen
 
@@ -18,9 +18,9 @@ RUST_LIBS=false
 all: build
 
 ARC64:
-	make build ARC=-DARC64 R_ARC=ARC64 CFG=--cfg RUST_LIBS=$(RUST_LIBS) EINT_T_INC=$(EINT_T_INC)
+	make build ARC=-DARC64 R_ARC=ARC64 CFG=--cfg RUST_LIBS=$(RUST_LIBS) MDLINT_INC=$(MDLINT_INC)
 ARC32:
-	make build ARC=-DARC32 R_ARC=ARC32 CFG=--cfg RUST_LIBS=$(RUST_LIBS) EINT_T_INC=$(EINT_T_INC)
+	make build ARC=-DARC32 R_ARC=ARC32 CFG=--cfg RUST_LIBS=$(RUST_LIBS) MDLINT_INC=$(MDLINT_INC)
 build: src/intlen.o src/libintlen.a
 	cp src/intlen.hpp inc
 	cp src/libintlen.a lib

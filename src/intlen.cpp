@@ -1,5 +1,4 @@
 # include "intlen.hpp"
-
 std::size_t mdl::intlen(uint_t __uint)
 {
     std::size_t len_of_int = 0;

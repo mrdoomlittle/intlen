@@ -1,73 +1,76 @@
 SHELL :=/bin/bash
-DEF_INSTALL=/usr/local
-INSTALL_DIR=$(DEF_INSTALL)
+def_install_dir=/usr/local
+ifndef install_dir
+ install_dir=$(def_install_dir)
+endif
 
-NO_BINARY=false
-INC_DIR_NAME=include
-MDLINT_INC=$(DEF_INSTALL)/$(INC_DIR_NAME)
+no_binary=true
+ifndef mdlint_inc_dir
+ mdlint_inc_dir=$(dir_include_dir)
+endif
 
-INC=-Iinc -I$(MDLINT_INC)
-LIB=-Llib
-LL=-lmdl-intlen
+inc_flags=-Iinc -I$(mdlint_inc_dir)
+lib_flags=-Llib
+ld_flags=-lmdl-intlen
 
-ARC=ARC32
-CFG=
-RUST_LIBS=false
+ifndef arc
+	arc=ARC32
+endif
+
+build_rust_lib=false
 
 all: build
-ARC64:
-	make build ARC=ARC64 CFG=--cfg RUST_LIBS=$(RUST_LIBS) MDLINT_INC=$(MDLINT_INC)
-ARC32:
-	make build ARC=ARC32 CFG=--cfg RUST_LIBS=$(RUST_LIBS) MDLINT_INC=$(MDLINT_INC)
+arc64:
+	make build arc=ARC64 build_rust_lib=$(build_rust_lib) mdlint_inc_dir=$(mdlint_inc_dir)
+arc32:
+	make build arc=ARC32 build_rust_lib=$(build_rust_lib) mdlint_inc_dir=$(mdlint_inc_dir)
 
 build: src/intlen.o libmdl-intlen.a
 	cp src/intlen.hpp inc/mdl
-	cp libmdl-intlen.a lib
-
-	if [ $(RUST_LIBS) = true ]; then\
-		make rust-libs R_ARC=$(R_ARC) CFG=$(CFG);\
-		cp libmdl-intlen.rlib rlib;\
+	if [ $(build_rust_lib) = true ]; then\
+		make rust-libs arc=$(arc);\
 		rustc -Lrlib -o bin/intlen.rust intlen.rs -lmdl-intlen;\
 	fi;
 
-	if [ $(NO_BINARY) = false ]; then\
-		g++ -Wall -std=c++11 $(INC) $(LIB) -D__$(ARC) -o bin/intlen intlen.cpp $(LL);\
+	if [ $(no_binary) = false ]; then\
+		g++ -Wall -std=c++11 $(inc_flags) $(lib_flags) -D__$(arc) -o bin/intlen intlen.cpp $(ld_flags);\
 	fi;
-rust-libs: src/libmdl-intlen.rlib
 
+rust-libs: src/libmdl-intlen.rlib
 libmdl-intlen.a: src/intlen.o
-	ar rcs libmdl-intlen.a src/intlen.o
+	ar rcs lib/libmdl-intlen.a src/intlen.o
 
 src/intlen.o: src/intlen.cpp
-	g++ -c -Wall -fPIC -std=c++11 $(INC) -D__$(ARC) -o src/intlen.o src/intlen.cpp
+	g++ -c -Wall -fPIC -std=c++11 $(inc_flags) -D__$(arc) -o src/intlen.o src/intlen.cpp
 
 src/libmdl-intlen.rlib: src/intlen.rs
-	rustc -Llib $(CFG) $(R_ARC) --crate-type=lib -o libmdl-intlen.rlib src/intlen.rs
+	rustc -Llib --cfg $(arc) --crate-type=lib -o rlib/libmdl-intlen.rlib src/intlen.rs
 
 clean:
 	rm -f bin/*
 	rm -f lib/*.a
-	rm -f *.a
-	rm -f *.rlib
 	rm -f rlib/*.rlib
 	rm -f inc/mdl/*.hpp
 	rm -f src/*.o
 install:
-	mkdir -p $(INSTALL_DIR)/bin
-	mkdir -p $(INSTALL_DIR)/lib
-	mkdir -p $(INSTALL_DIR)/rlib
-	mkdir -p $(INSTALL_DIR)/$(INC_NAME)
+	mkdir -p $(install_dir)/bin
+	mkdir -p $(install_dir)/lib
+	mkdir -p $(install_dir)/rlib
+	mkdir -p $(install_dir)/include
 
-	cp bin/intlen $(INSTALL_DIR)/bin/intlen
-	cp lib/libmdl-intlen.a $(INSTALL_DIR)/lib
-	if [ -f rlib/libmdl-intlen.rlib ]; then\
-		cp rlib/libmdl-intlen.rlib $(INSTALL_DIR)/rlib;\
+	if [ -f bin/intlen ]; then \
+		cp bin/intlen $(install_dir)/bin/intlen; \
 	fi;
 
-	mkdir -p $(INSTALL_DIR)/$(INC_NAME)/mdl
-	cp inc/intlen.hpp $(INSTALL_DIR)/$(INC_NAME)/mdl
+	cp lib/libmdl-intlen.a $(install_dir)/lib
+	if [ -f rlib/libmdl-intlen.rlib ]; then \
+		cp rlib/libmdl-intlen.rlib $(install_dir)/rlib;\
+	fi;
+
+	mkdir -p $(install_dir)/include/mdl
+	cp inc/mdl/intlen.hpp $(install_dir)/include/mdl
 uninstall:
-	rm -f $(INSTALL_DIR)/bin/intlen
-	rm -f $(INSTALL_DIR)/lib/libmdl-intlen.a
-	rm -f $(INSTALL_DIR)/rlib/libmdl-intlen.rlib
-	rm -rf $(INSTALL_DIR)/$(INC_NAME)/mdl
+	rm -f $(install_dir)/bin/intlen
+	rm -f $(install_dir)/lib/libmdl-intlen.a
+	rm -f $(install_dir)/rlib/libmdl-intlen.rlib
+	rm -rf $(install_dir)/include/mdl
